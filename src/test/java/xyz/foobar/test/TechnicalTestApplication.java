@@ -19,24 +19,26 @@ public class TechnicalTestApplication {
 		DiffEngineService diffService = new DiffEngineService();
 
 		Pet pet = new Pet();
-		pet.setName("Cat");
-		pet.setType("Lucy");
+		pet.setName("Lucy");
+		pet.setType("Cat");
 
 		Person original = new Person();
-		original.setFirstName("First Name");
+		original.setFirstName("First Name Here");
 		original.setSurname("Surname");
 
 		Person modified = new Person();
-		modified.setFirstName("Modified firstName");
-		modified.setSurname("modified surname");
+		modified.setFirstName("Modified firstName Here ");
+		modified.setSurname("modified surname Here");
 		modified.setPet(pet);
 		try {
 
 			Diff<Person> diff = diffService.calculate(null, modified);
 			System.out.println(diff);
 
-			// Person person = diffService.apply(modified, diff);
-			// System.out.println(person);
+			System.out.println("\n");
+			diff = diffService.calculate(original, null);
+			System.out.println(diff);
+
 		} catch (DiffException e) {
 
 			e.printStackTrace();

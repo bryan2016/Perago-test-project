@@ -1,6 +1,5 @@
 package xyz.foobar.services;
 
-import java.awt.BufferCapabilities.FlipContents;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,13 +38,14 @@ public class DiffEngineService implements DiffEngine {
 		List<String> fields = new ArrayList<String>();
 		Diff<T> diff = null;
 
-		//  Creating Object For the First TIme
+		int index = 1;
+		String value = "";
+
+		// Creating Object For the First TIme
 		if (original == null && modified != null) {
 			diff = new Diff<T>();
 			diff.setObj(modified);
 
-			int index = 1;
-			String value = "";
 			// diff.getObj().getClass().getName();
 			for (Field field : Arrays.asList(modified.getClass().getDeclaredFields())) {
 
@@ -62,19 +62,20 @@ public class DiffEngineService implements DiffEngine {
 
 			return diff;
 		} /////////////
-		if (original != null) {
+		if (original != null && modified == null) {
 
 			diff = new Diff<T>();
-			diff.setObj(original);
+			// diff.setObj(original);
 
-			for (Field field : Arrays.asList(modified.getClass().getDeclaredFields())) {
+			value = "1. Deleted " + original.getClass().getName();
+			diff.setParent(value);
 
-				diff.setParent(field.getName());
+			Object object =original;
+			
+			System.out.println("Object ="+object.toString());
 
-				// Here is to Check Modified Fileds
-				fields.add(field.getName());
-			}
-			diff.setFields(fields);
+			
+			return diff;
 		} else if (modified != null) {
 
 		}
